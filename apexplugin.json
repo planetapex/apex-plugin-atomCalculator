@@ -4,7 +4,7 @@
     "private": "N",
     "description": "A Dynamic action plugin providing a popup calculator for realtime calculations. ",
     "keywords": ["oracle", "apex", "plugin", "dynamicAction", "calculator", "popup", "calculation", "math"],
-    "homepage": "http://apexfusion.blogspot.com/2017/04/oracle-apex-dynamic-action-plugin-atom.html",
+    "homepage": "https://github.com/planetapex/apex-plugin-atomCalculator",
     "bugs": {
         "url": "https://github.com/planetapex/apex-plugin-atomCalculator/issues",
         "email": "yasirali.wizerp@gmail.com"
@@ -13,7 +13,7 @@
     "author": {
         "name": "M.Yasir Ali Shah",
         "email": "yasirali.wizerp@gmail.com",
-        "url": "https://pk.linkedin.com/in/m-yasir-ali-shah-13b5016a",
+        "url": "http://apexfusion.blogspot.com/2017/04/oracle-apex-dynamic-action-plugin-atom.html",
         "twitter": "m_yasir_ali",
         "linkedin": "https://pk.linkedin.com/in/m-yasir-ali-shah-13b5016a",
         "donationUrl": "https://www.paypal.me/MYasirAliShah/4"
