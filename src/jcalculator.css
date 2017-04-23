@@ -1,0 +1,408 @@
+/* -------------------------------------------------
+    Calculator
+   ------------------------------------------------- */
+
+.calculators-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+@media print {
+    .calculators-container {
+        display: none;
+    }
+}
+
+.calculator {
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-sizing: content-box;
+    font-family: Tahoma, sans-serif;
+    font-size: 14px;
+    color: #4a4a4a;
+    width: 250px;
+    position: absolute;
+    left: -100000px;
+    opacity: 0;
+    transition: opacity 0.3s ease, left 0s 0.3s, -webkit-transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, left 0s 0.3s;
+    transition: opacity 0.3s ease, transform 0.3s ease, left 0s 0.3s, -webkit-transform 0.3s ease;
+    z-index: 100;
+}
+
+.calculator.-from-top- {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+}
+
+.calculator.-from-right- {
+    -webkit-transform: translateX(8px);
+    transform: translateX(8px);
+}
+
+.calculator.-from-bottom- {
+    -webkit-transform: translateY(8px);
+    transform: translateY(8px);
+}
+
+.calculator.-from-left- {
+    -webkit-transform: translateX(-8px);
+    transform: translateX(-8px);
+}
+
+.calculator.active {
+    opacity: 1;
+    -webkit-transform: translate(0);
+    transform: translate(0);
+    transition: opacity 0.3s ease, left 0s 0s, -webkit-transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, left 0s 0s;
+    transition: opacity 0.3s ease, transform 0.3s ease, left 0s 0s, -webkit-transform 0.3s ease;
+}
+
+.calculator-inline .calculator {
+    border-color: #d7d7d7;
+    box-shadow: none;
+    position: static;
+    left: auto;
+    right: auto;
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+}
+
+.calculator-inline .calculator--pointer {
+    display: none;
+}
+
+.calculator--content {
+    box-sizing: content-box;
+    padding: 0px;
+}
+
+.calculator--pointer {
+    position: absolute;
+    /* background: #fff;*/
+    border-top: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+    width: 10px;
+    height: 10px;
+    z-index: -1;
+}
+
+.mat {
+    background: #3b3b3b;
+}
+
+.drk {
+    background: #1a1a1a;
+}
+
+.lit {
+    background: #ffffff;
+}
+
+.-top-left- .calculator--pointer,
+.-top-center- .calculator--pointer,
+.-top-right- .calculator--pointer {
+    top: calc(100% - 4px);
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+
+.-right-top- .calculator--pointer,
+.-right-center- .calculator--pointer,
+.-right-bottom- .calculator--pointer {
+    right: calc(100% - 4px);
+    -webkit-transform: rotate(225deg);
+    transform: rotate(225deg);
+}
+
+.-bottom-left- .calculator--pointer,
+.-bottom-center- .calculator--pointer,
+.-bottom-right- .calculator--pointer {
+    bottom: calc(100% - 4px);
+    -webkit-transform: rotate(315deg);
+    transform: rotate(315deg);
+}
+
+.-left-top- .calculator--pointer,
+.-left-center- .calculator--pointer,
+.-left-bottom- .calculator--pointer {
+    left: calc(100% - 4px);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.-top-left- .calculator--pointer,
+.-bottom-left- .calculator--pointer {
+    left: 10px;
+}
+
+.-top-right- .calculator--pointer,
+.-bottom-right- .calculator--pointer {
+    right: 10px;
+}
+
+.-top-center- .calculator--pointer,
+.-bottom-center- .calculator--pointer {
+    left: calc(50% - 10px / 2);
+}
+
+.-left-top- .calculator--pointer,
+.-right-top- .calculator--pointer {
+    top: 10px;
+}
+
+.-left-bottom- .calculator--pointer,
+.-right-bottom- .calculator--pointer {
+    bottom: 10px;
+}
+
+.-left-center- .calculator--pointer,
+.-right-center- .calculator--pointer {
+    top: calc(50% - 10px / 2);
+}
+
+.calculator--body {
+    display: none;
+}
+
+.calculator--body.active {
+    display: block;
+}
+
+.jcalculator {
+    font-family: Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
+    width: 100%;
+    /*   display: none;*/
+    position: absolute;
+    left: 0;
+    text-align: center;
+    border-right: 2px solid #F1F1F1;
+    border-left: 2px solid #F1F1F1;
+    border-bottom: 2px solid #F1F1F1;
+}
+
+.jcalculator span {
+    cursor: pointer;
+    float: left;
+    display: block;
+    color: #ffffff;
+    width: 25%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 12px;
+    box-sizing: border-box;
+    user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -ms-user-select: none;
+    /*animation*/
+    position: relative;
+    overflow: hidden;
+}
+
+.rtl {
+    text-align: right;
+}
+
+.jcalculator span:active {
+    line-height: 52px;
+}
+
+.jcalculator .op {
+    background: #191919;
+    font-size: 20px;
+}
+
+.jcalculator.temp2 span.zero-btn {
+    width: 49.99%;
+}
+
+
+/* ======================== */
+
+
+/* Light Theme ============ */
+
+
+/* ======================== */
+
+.jcalculator.light {
+    background: #ffffff;
+}
+
+.jcalculator.light span {
+    background: #ffffff;
+    color: #6d6d6d;
+    border-bottom: 1px solid #F1F1F1;
+    border-left: 1px solid #F1F1F1;
+    position: relative;
+}
+
+.jcalculator.light .op {
+    color: #2b83d2;
+}
+
+.jcalculator.light .eq {
+    background: #256905;
+    /*#DF994B ;*/
+    color: #fff;
+}
+
+.jcalculator.light .clear-btn {
+    background: #D31158;
+    color: #fff;
+}
+
+
+/* ======================== */
+
+
+/* Dark Theme ============= */
+
+
+/* ======================== */
+
+.jalculator.dark {
+    background: #1a1a1a;
+    border-right: 1px solid #000000;
+}
+
+.jcalculator.dark span {
+    color: #cdcdcd;
+    background: #1a1a1a;
+    border-left: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    position: relative;
+    /*animation*/
+    position: relative;
+    overflow: hidden;
+}
+
+.jcalculator.dark .op {
+    background: #131313;
+    font-size: 14px;
+}
+
+.jcalculator.dark .eq {
+    background: #256905;
+    color: #ffffff;
+    border-bottom: 0;
+    box-shadow: none;
+}
+
+
+/* ======================== */
+
+
+/* Material Theme ========= */
+
+
+/* ======================== */
+
+.jcalculator.material {
+    background: #3b3b3b;
+}
+
+.jcalculator.material span {
+    border: 0;
+    font-weight: lighter;
+    font-weight: 14px;
+    position: relative;
+    border-bottom: 1px solid #5b5b5b;
+    border-left: 1px solid #5b5b5b;
+}
+
+.jcalculator.material .eq {
+    background: #256905;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.jcalculator .ani-mat.clear-btn {
+    background: #D31158;
+}
+
+.jcalculator.material .op {
+    background: #5b5b5b;
+    border-bottom: 1px solid #6d6d6d;
+    border-left: 1px solid #6d6d6d;
+}
+
+.jcalculator span.dot {
+    font-weight: bolder!important;
+    font-size: 1.5em!important;
+    vertical-align: middle;
+}
+
+
+/*Animations*/
+
+.jcalculator span.ripple:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 120px;
+    height: 120px;
+    margin-left: -60px;
+    margin-top: -60px;
+    border-radius: 50%;
+    /*background: #F1F1F1;*/
+    transform: scale(0);
+}
+
+@keyframes ripple {
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+.jcalculator span.ripple:not(:active):after {
+    animation: ripple 0.5s linear;
+}
+
+.jcalculator span.ani-lit.ripple:after {
+    background: #cdcdcd;
+}
+
+.jcalculator span.ani-mat.ripple:after {
+    background: #F1F1F1;
+}
+
+
+/*Button Styles*/
+
+.buttonStyle1 {
+    box-shadow: inset -1px -1px 0px #272727;
+    -webkit-box-shadow: inset -1px -1px 0px #272727;
+    -moz-box-shadow: inset -1px -1px 0px #272727;
+}
+
+.buttonStyle2 {
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -2px 0 rgba(0, 0, 0, .25), inset 0 -3px 0 rgba(255, 255, 255, .2), 0 1px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -2px 0 rgba(0, 0, 0, .25), inset 0 -3px 0 rgba(255, 255, 255, .2), 0 1px 0 rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -2px 0 rgba(0, 0, 0, .25), inset 0 -3px 0 rgba(255, 255, 255, .2), 0 1px 0 rgba(0, 0, 0, .1);
+}
+
+
+/* fixes initial animation run, without user input, on page load.
+ */
+
+
+/*.jcalculator.material span.ripple:after {
+    visibility: hidden;
+}
+
+.jcalculator.material span.ripple:hover:after {
+    visibility: visible;
+}*/
