@@ -15,6 +15,7 @@ Available on
 
 ## Changelog
 
+#### 1.1 - Bugs Removed Event Firing Multiple Times
 #### 1.0 - Initial Release
 
 

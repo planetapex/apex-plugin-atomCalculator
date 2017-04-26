@@ -62,21 +62,6 @@
     transition: opacity 0.3s ease, transform 0.3s ease, left 0s 0s, -webkit-transform 0.3s ease;
 }
 
-.calculator-inline .calculator {
-    border-color: #d7d7d7;
-    box-shadow: none;
-    position: static;
-    left: auto;
-    right: auto;
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-}
-
-.calculator-inline .calculator--pointer {
-    display: none;
-}
-
 .calculator--content {
     box-sizing: content-box;
     padding: 0px;
@@ -92,15 +77,15 @@
     z-index: -1;
 }
 
-.mat {
+.calculator--pointer.mat {
     background: #3b3b3b;
 }
 
-.drk {
+.calculator--pointer.drk {
     background: #1a1a1a;
 }
 
-.lit {
+.calculator--pointer.lit {
     background: #ffffff;
 }
 

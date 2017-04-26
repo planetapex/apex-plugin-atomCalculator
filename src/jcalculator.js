@@ -31,7 +31,7 @@
                 classes: '',
                 inline: false,
                 autoClose: false,
-                calcID: null,
+                // calcID: null,
 
                 // events
                 onInput: function() {},
@@ -49,7 +49,7 @@
 
             this.opts = $.extend(true, {}, defaults, options, this.$el.data());
 
-            if ($body == undefined) {
+            if ($body === undefined) {
                 $body = $('body');
             }
 
@@ -102,7 +102,7 @@
                 if (this.opts.keyboardNav) {
                     this._bindKeyboardEvents();
                 }
-                this.opts.calcID = 'jCalc_' + Math.floor(Math.random() * 10000000 + 10000);
+                // this.opts.calcID = 'jCalc_' + Math.floor(Math.random() * 10000000 + 10000);
                 new $.fn.calculator.Body(this, '', this.opts);
 
                 this.inited = true;
@@ -123,18 +123,14 @@
             _onKeyDown: function(e) {
                 var code = e.which;
                 this._registerKey(code);
-                // console.log('e', e);
-                // console.log('ins', this.$calculator.find('.jcalculator span#opa'));
-
-
 
                 if ((code >= 96 && code <= 105) || code == 110) {
                     var spn = code == 110 ? 'Dot' : 0 + code - 96;
-
                     e.preventDefault();
-                    // $(this.$calculator).find('.jcalculator span#num' + spn).trigger('click');
+                    //    $('#' + this.opts.calcID).find('span#num' + spn).trigger('click');
+                    this.$calculator.find('.jcalculator span#num' + spn).trigger('click');
 
-                    $('#' + this.opts.calcID).find('span#num' + spn).trigger('click');
+
                     spn = '';
 
 
@@ -158,12 +154,14 @@
 
                     }
                     e.preventDefault();
-                    $('#' + this.opts.calcID).find('span#op' + spn).trigger('click');
+                    // $('#' + this.opts.calcID).find('span#op' + spn).trigger('click');
+                    this.$calculator.find('.jcalculator span#op' + spn).trigger('click');
                     spn = '';
 
                 } else if (code == 13) { // Enter     
                     e.preventDefault();
-                    $('#' + this.opts.calcID).find('span#ope').trigger('click');
+                    // $('#' + this.opts.calcID).find('span#ope').trigger('click');
+                    this.$calculator.find('.jcalculator span#ope').trigger('click');
                     spn = '';
                 } else if (code == 27) { // Esc
                     e.preventDefault();
@@ -215,26 +213,10 @@
             },
 
             _buildBaseHtml: function() {
-                var $appendTarget,
-                    $inline = $('<div class="calculator-inline">');
-
-                if (this.el.nodeName == 'INPUT') {
-                    if (!this.opts.inline) {
-                        $appendTarget = $calculatorsContainer;
-                    } else {
-                        $appendTarget = $inline.insertAfter(this.$el)
-                    }
-                } else {
-                    $appendTarget = $inline.appendTo(this.$el)
-                }
-
-                this.$calculator = $(baseTemplate).appendTo($appendTarget);
-
+                this.$calculator = $(baseTemplate).appendTo($calculatorsContainer);
                 if (this.opts.theme == 'material') this.$calculator.find('.calculator--pointer').addClass('mat');
                 else if (this.opts.theme == 'dark') this.$calculator.find('.calculator--pointer').addClass('drk');
                 else if (this.opts.theme == 'light') this.$calculator.find('.calculator--pointer').addClass('lit');
-
-
 
                 this.$content = $('.calculator--content', this.$calculator);
 
@@ -254,7 +236,6 @@
                     .removeAttr('class')
                     .addClass(classes);
             },
-
             setPosition: function(position) {
                 position = position || this.opts.position;
 
@@ -265,17 +246,15 @@
                     offset = parseInt(this.opts.offset),
                     main = pos[0],
                     secondary = pos[1];
-
-
+                // console.log('top', dims.top, 'height', selfDims.height);
 
                 switch (main) {
                     case 'top':
                         top = dims.top - selfDims.height - offset;
-                        // console.log('top', top);
                         break;
                     case 'right':
-                        left = parseFloat(dims.left) + parseFloat(dims.width) + offset;
-                        // console.log('left', left);
+                        left = dims.left + dims.width + offset;
+
                         break;
                     case 'bottom':
                         top = dims.top + dims.height + offset;
@@ -287,7 +266,7 @@
 
                 switch (secondary) {
                     case 'top':
-                        top = parseFloat(dims.top);
+                        top = dims.top;
                         break;
                     case 'right':
                         left = dims.left + dims.width - selfDims.width;
@@ -310,7 +289,7 @@
                     .css({
                         left: left + 'px',
                         top: top + 'px'
-                    })
+                    });
             },
 
             _getDimensions: function($el) {
@@ -383,13 +362,8 @@
 
 
                 _this.focused = '';
+                _this.$calculator.remove();
 
-
-                if (_this.opts.inline || !_this.elIsInput) {
-                    _this.$calculator.closest('.calculator-inline').remove();
-                } else {
-                    _this.$calculator.remove();
-                }
             },
 
             _onShowEvent: function(e) {
@@ -503,7 +477,7 @@
             }
 
 
-            if (this.opts.displayMode == "basic") { //jCalculator Obj
+            if (this.opts.displayMode === "basic") { //jCalculator Obj
                 this.$calc = $(this.template1)
                     .appendTo(this.d.$content)
                     .addClass("temp1")
@@ -516,7 +490,7 @@
 
             $('');
 
-            this.$calc.attr('id', calc.opts.calcID);
+            // this.$calc.attr('id', calc.opts.calcID);
             this.$calc.addClass('temp');
 
             if (calc.opts.buttonStyle) {
@@ -534,24 +508,30 @@
             }
 
 
+            $(this.$calc).on('click', 'span.clear-btn', this._clrPress.bind(self));
+            $(this.$calc).on('click', 'span.num-btn', this._numPress.bind(self));
+            $(this.$calc).on('click', '.func-btn', this._funcPress.bind(self));
+            $(this.$calc).on('click', 'span.eql-btn', this._eqPress.bind(self));
 
-            $('span.clear-btn', this.$calc).on('click', this._clrPress.bind(self));
-            $('span.num-btn', this.$calc).on('click', this._numPress.bind(self));
-            //
-            $("span.plusminus-btn", this.$calc).on('click', this._signPress.bind(self));
-            // Percent operations
-            $('span.percent-btn', this.$calc).on('click', this._percPress.bind(self));
-            // $('span.func-btn', this.$calc).on('click', this._funcPress.bind(self));
-            $('.func-btn').on('click', this._funcPress.bind(self));
-            $('span.eql-btn', this.$calc).on('click', this._eqPress.bind(self));
-
+            if (this.opts.displayMode == "extended") {
+                $(this.$calc).on('click', 'span.plusminus-btn', this._signPress.bind(self));
+                $(this.$calc).on('click', 'span.percent-btn', this._percPress.bind(self));
+            }
 
 
+
+
+            // $('span.clear-btn', this.$calc).on('click', this._clrPress.bind(self));
+            // $('span.num-btn', this.$calc).on('click', this._numPress.bind(self));
+            // $('.func-btn', this.$calc).on('click', this._funcPress.bind(self));
+            // $('span.eql-btn', this.$calc).on('click', this._eqPress.bind(self));
+
+            // if (this.opts.displayMode == "extended") {
+            //     $("span.plusminus-btn", this.$calc).on('click', this._signPress.bind(self));
+            //     $('span.percent-btn', this.$calc).on('click', this.$calc, this._percPress.bind(self));
+            // }
 
             this.init();
-
-
-
 
         };
 
@@ -756,9 +736,9 @@
 
 
 
-                if ((this.$display.data("isCurrFunction") == true) && (this.$display.data("valueOneLocked") == true)) {
+                if (this.$display.data("isCurrFunction") && this.$display.data("valueOneLocked")) {
                     // console.log("2nd Entry");
-                    if (this.$display.data("typing1stChar") === true) { //first Digit
+                    if (this.$display.data("typing1stChar")) { //first Digit
                         // console.log("first Digit");
                         if ($numPressed == '.') {
                             this.push('0' + $numPressed);
@@ -810,7 +790,7 @@
                     // Clicking on a number fresh/first Entry
                 } else {
                     // console.log("First Entry");
-                    if (this.$display.data("typing1stChar") === true) {
+                    if (this.$display.data("typing1stChar")) {
                         // console.log("first character");
                         if ($numPressed == '.') {
                             // console.log("dot pressed")
@@ -865,16 +845,16 @@
 
             _signPress: function(e) {
                 this.ripple(e.target);
-                if ((this.$display.data("valueOneLocked") == false) && (this.$display.data("valueTwoLocked") == false)) {
+                if (!this.$display.data("valueOneLocked") && !this.$display.data("valueTwoLocked")) {
                     var changesign = this.pull();
                     changesign = changesign * -1;
                     this.push(changesign);
-                } else if ((this.$display.data("valueOneLocked") == true)) {
+                } else if (this.$display.data("valueOneLocked")) {
                     var changesign = this.$display.data("valueTwo");
                     changesign = changesign * -1;
                     this.$display.data("valueTwo", changesign);
                     this.push(changesign);
-                } else if ((this.$display.data("valueTwoLocked") == true)) {
+                } else if (this.$display.data("valueTwoLocked")) {
                     var changesign = this.$display.data("valueOne");
                     changesign = changesign * -1;
                     this.$display.data("valueOne", changesign);
@@ -885,20 +865,20 @@
             _percPress: function(e) {
                 this.ripple(e.target);
                 var percentNum, finalValue;
-                if ((this.$display.data("valueOneLocked") == false && this.$display.data("valueTwoLocked") == false) || (this.$display.data("valueOneLocked") == true && this.$display.data("valueTwoLocked") == false && this.$display.data("isCurrFunction") === true)) {
+                if ((!this.$display.data("valueOneLocked") && !this.$display.data("valueTwoLocked")) || (this.$display.data("valueOneLocked") && !this.$display.data("valueTwoLocked") && this.$display.data("isCurrFunction"))) {
                     percentNum = this.pull();
                     finalValue = percentNum / 100;
                     //this.push(finalValue);
                     this.resetCalculator(finalValue);
 
-                } else if ((this.$display.data("valueTwoLocked") == true) && (this.$display.data("CurrFunction") == "-") || (this.$display.data("CurrFunction") == "+")) {
+                } else if (this.$display.data("valueTwoLocked") && (this.$display.data("CurrFunction") == "-") || (this.$display.data("CurrFunction") == "+")) {
                     percentNum = this.$display.data("valueTwo");
                     var newNum = this.$display.data("valueOne");
                     percentNum = percentNum / 100;
                     finalValue = newNum * percentNum;
                     this.push(finalValue);
                     this.$display.data("valueTwo", finalValue);
-                } else if ((this.$display.data("valueTwoLocked") === true) && (this.$display.data("CurrFunction") == "x") || (this.$display.data("CurrFunction") == String.fromCharCode(247))) {
+                } else if (this.$display.data("valueTwoLocked") && (this.$display.data("CurrFunction") == "x") || (this.$display.data("CurrFunction") == String.fromCharCode(247))) {
                     percentNum = this.$display.data("valueTwo");
                     finalValue = percentNum / 100;
                     this.push(finalValue);
@@ -917,7 +897,7 @@
                 var dispVal = this.pull();
                 var pendingFunction = $(e.target).text().trim();
 
-                if (this.$display.data("isCurrFunction") === true) {
+                if (this.$display.data("isCurrFunction")) {
                     this.$display.data("PrevFunction", this.$display.data("CurrFunction"))
                     this.$display.data("isPrevFunction", true);
                     this.$display.data("isRunTotal", true);
@@ -995,7 +975,7 @@
                 // }
 
 
-                if (this.$display.data("isRunTotal") === true) {
+                if (this.$display.data("isRunTotal")) {
                     this.resetDisplay(finalValue, true);
 
                 } else {

@@ -1,6 +1,6 @@
 {
     "name": "Atom Calculator",
-    "version": "1.0",
+    "version": "1.1",
     "private": "N",
     "description": "A Dynamic action plugin providing a popup calculator for realtime calculations. ",
     "keywords": ["oracle", "apex", "plugin", "dynamicAction", "calculator", "popup", "calculation", "math"],
